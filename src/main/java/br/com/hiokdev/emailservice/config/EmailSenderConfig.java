@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 
 import br.com.hiokdev.emailservice.adapters.EmailSenderGateway;
@@ -24,18 +23,17 @@ public class EmailSenderConfig {
   @Autowired
   private JavaMailSender javaMailSender;
 
-  // @Bean
-  // public AmazonSimpleEmailService amazonSimpleEmailService() {
-  //   return AmazonSimpleEmailServiceClientBuilder.standard().build();
-  // }
+  @Bean
+  public AmazonSimpleEmailService amazonSimpleEmailService() {
+    return AmazonSimpleEmailServiceClientBuilder.standard().build();
+  }
 
   @Bean
   public EmailSenderGateway emailSenderGateway() {
     if (emailProvider.equals("sendgrid")) {
       return new SendGridEmailSender(javaMailSender);
     } else if (emailProvider.equals("aws-ses")) {
-      // return new SesEmailSender(amazonSimpleEmailService());
-      return new FakeMailSender();
+      return new SesEmailSender(amazonSimpleEmailService());
     }
     return new FakeMailSender();
   }
