@@ -1,0 +1,9 @@
+### Send mail
+POST http://localhost:8080/api/email
+Content-Type: application/json
+
+{
+  "to": "rodolfo.okino@gmail.com",
+  "subject": "test subject",
+  "body": "test email body"
+}
