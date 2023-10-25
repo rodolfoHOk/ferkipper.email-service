@@ -7,3 +7,13 @@ Content-Type: application/json
   "subject": "test subject",
   "body": "test email body"
 }
+
+### Send mail test validation
+POST http://localhost:8080/api/email
+Content-Type: application/json
+
+{
+  "to": "",
+  "subject": "",
+  "body": ""
+}
