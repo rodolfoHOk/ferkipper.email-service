@@ -25,7 +25,10 @@ public class EmailSenderConfig {
 
   @Bean
   public AmazonSimpleEmailService amazonSimpleEmailService() {
-    return AmazonSimpleEmailServiceClientBuilder.standard().build();
+    if (emailProvider.equals("aws-ses")) {
+      return AmazonSimpleEmailServiceClientBuilder.standard().build();
+    }
+    return null;
   }
 
   @Bean
